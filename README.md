@@ -5,9 +5,10 @@ https://game-of-throne.netlify.app/
 
 # FEATURES
 Single page react.js based app!
-Use of hooks and external APIs
-Mobile Responsive design
-All the character details is being dynmacially fetched
+Use of hooks and external APIs.
+Ability to filter characters by their name!!
+Mobile Responsive design.
+All the character details is being dynmacially fetched.
 
 # UPCOMING ADDITIONS
 Quiz (A quiz based on famous quotes of GOT)
