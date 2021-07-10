@@ -5,14 +5,14 @@ import React, {useEffect, useState}from 'react'
 const Character = ({match}) => {
 
     const[charDetail,setCharDetail]=useState({});
-    const[isLoading,setIsLoading]=useState(true);
+    const[isLoadingCharacter,setIsLoadingChar]=useState(true);
     const[quote,setQuote]=useState([]);
 
     useEffect(() => {
         const getCharacterDetail = async () => {
             const result = await axios.get(
                 `https://raw.githubusercontent.com/jeffreylancaster/game-of-thrones/master/data/characters.json`);
-
+            console.log(result)
             setCharDetail(result.data.characters.filter(detail => detail.houseName && detail.characterImageThumb ));
             getQuotes();
         }
@@ -22,15 +22,23 @@ const Character = ({match}) => {
                 `https://game-of-thrones-quotes.herokuapp.com/v1/characters`);
             
             setQuote(result.data);
-            setIsLoading(false);
+            setIsLoadingChar(false);
         }
 
         getCharacterDetail();
-    },[])
+    },[]);
 
-    if(isLoading){
-        return(<img src={Spinner} alt="spinner image" class="spinnerImg"/>);
+    // console.log(charDetail);
+    // setCharDetail(charDetail.characters.filter(detail => detail.houseName && detail.characterImageThumb ));
+
+    if(isLoadingCharacter){
+        return(<img src={Spinner} alt="spinner image" className="spinnerImg"/>);
     }else{
+        if(match.path == "/character/:characterLink"){ 
+            document.getElementsByClassName("App")[0].classList.remove("homeBackground");
+            document.getElementsByClassName("App")[0].classList.remove("quizBackground");
+            document.getElementsByClassName("App")[0].classList.add("characterBackground");
+        }
         const allDeatil = charDetail.filter(item => item.characterLink === "/character/"+match.params.characterLink+"/");
         const allQuote = quote.filter(item => item.name === allDeatil[0].characterName);
 
@@ -52,31 +60,31 @@ const Character = ({match}) => {
                                 <tr>
                                     <td><strong>Married To :</strong></td>
                                     <td>
-                                        {allDeatil[0].marriedEngaged ? allDeatil[0].marriedEngaged.map(item => (<span className>{item}</span>)) : (<span className="noData">Not yet married/engaged</span>)}
+                                        {allDeatil[0].marriedEngaged ? allDeatil[0].marriedEngaged.map((item,index) => (<span className="listItem" key={index}>{item}</span>)) : (<span className="noData">Not yet married/engaged</span>)}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Killed :</strong></td>
                                     <td>
-                                        {allDeatil[0].killed ? allDeatil[0].killed.map(item => (<span className="listItem">{item}</span>)) : (<span className="noData">No reported killings</span>)}
+                                        {allDeatil[0].killed ? allDeatil[0].killed.map((item,index) => (<span className="listItem" key={index}>{item}</span>)) : (<span className="noData">No reported killings</span>)}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Parents :</strong></td>
                                     <td>
-                                        {allDeatil[0].parents ? allDeatil[0].parents.map(item => (<span className="listItem">{item}</span>)) : (<span className="noData">Parents unknown</span>)}
+                                        {allDeatil[0].parents ? allDeatil[0].parents.map((item,index) => (<span className="listItem" key={index}>{item}</span>)) : (<span className="noData">Parents unknown</span>)}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Siblings : </strong></td>
                                     <td>
-                                        {allDeatil[0].siblings ? allDeatil[0].siblings.map(item => (<span className="listItem">{item}</span>)) : (<span className="noData">No siblings</span>)}
+                                        {allDeatil[0].siblings ? allDeatil[0].siblings.map((item,index) => (<span className="listItem" key={index}>{item}</span>)) : (<span className="noData">No siblings</span>)}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Quotes : </strong></td>
                                     <td>
-                                        {allQuote.length>0 ? allQuote[0].quotes.map(item => (<span className="listItem">{item}</span>)) : (<span className="noData">no famous quotes</span>)}
+                                        {allQuote.length>0 ? allQuote[0].quotes.map((item,index) => (<span className="listItem" key={index}>{item}</span>)) : (<span className="noData">no famous quotes</span>)}
                                     </td>
                                 </tr>
                             </tbody>

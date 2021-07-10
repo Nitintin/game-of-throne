@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {Link} from 'react-router-dom';
 
 const Search = ({mainFilter}) => {
 
@@ -12,13 +13,16 @@ const Search = ({mainFilter}) => {
     return (
         <>
             <center>
-            <input 
-                type="text" 
-                placeholder="Search Character" 
-                className="searchField"
-                value={search}
-                onChange={(e)=>filterResult(e.target.value)}
-            />
+                <input 
+                    type="text" 
+                    placeholder="Search Character by his first name" 
+                    className="searchField"
+                    value={search}
+                    onChange={(e)=>filterResult(e.target.value)}
+                />
+                <Link to="/quiz">
+                    <button className="quizButton">Play Quiz</button>
+                </Link>
             </center>
         </>
     )

@@ -6,7 +6,6 @@ import Home from "./components/Home";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Character from './components/Character';
 import Quiz from './components/Quiz';
-import Search from './components/Search';
 
 function App() {
 
@@ -36,10 +35,9 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App quizBackground characterBackground homeBackground">
       <Router>
         <Header/>
-        <Search mainFilter={mainFilter}/>
         <Switch>
           <Route 
             exact path="/"

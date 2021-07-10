@@ -1,12 +1,20 @@
 import React from 'react'
 import Spinner from '../images/spinner.gif';
 import {Link} from 'react-router-dom'
+import Search from './Search';
 
-const Home = ({characters, isLoading}) => {
+const Home = ({characters, isLoading, mainFilter,match}) => {
+    
     const displayCharacters = ()=>{
+        
         if(isLoading){
-            return(<img src={Spinner} alt="spinner image" class="spinnerImg"/>);
+            return(<img src={Spinner} alt="spinner image" className="spinnerImg"/>);
         }else{
+            if(!match){
+                document.getElementsByClassName("App")[0].classList.remove("quizBackground");
+                document.getElementsByClassName("App")[0].classList.remove("characterBackground");
+                document.getElementsByClassName("App")[0].classList.add("homeBackground");
+            }
             const girdList = characters.filter(detail => detail.houseName && detail.characterImageThumb ).map(item => (
                 <Link to={item.characterLink} key={item.characterLink}>
                     <div className="grid-item" >
@@ -40,11 +48,15 @@ const Home = ({characters, isLoading}) => {
     }
 
     return (
-        <div className="home">
-            <div className="grid-container">
-                {displayCharacters()}
+        <>
+            <Search mainFilter={mainFilter}/>
+            <div className="home">
+                <div className="grid-container">
+                    {displayCharacters()}
+                </div>
             </div>
-        </div>
+        </>
+        
     )
 }
 
